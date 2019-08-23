@@ -1,0 +1,125 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+####====================TOKENIZATION======================####
+t = "Cyprus, officially the Republic of Cyprus, is an island country in the Eastern Mediterranean and the third largest and third most populous island in the Mediterranean. Cyprus is located south of Turkey, west of Syria and Lebanon, northwest of Israel, north of Egypt, and southeast of Greece. Cyprus is a major tourist destination in the Mediterranean. With an advanced, high-income economy and a very high Human Development Index, the Republic of Cyprus has been a member of the Commonwealth since 1961 and was a founding member of the Non-Aligned Movement until it joined the European Union on 1 May 2004. On 1 January 2008, the Republic of Cyprus joined the eurozone."
+
+import nltk
+
+from nltk  import sent_tokenize,word_tokenize
+
+sentences=sent_tokenize(t.lower())
+sentences
+
+token=word_tokenize(sentences[2])
+token
+
+####====================POS TAGGING======================####
+
+from nltk import pos_tag
+import nltk
+#nltk.download('averaged_perceptron_tagger')
+
+tags=pos_tag(token)
+tags
+
+#!pip install textblob
+
+from textblob import TextBlob
+text=TextBlob(sentences[0])
+text
+text.tags
+text.noun_phrases
+
+#import nltk
+#nltk.download('brown')
+
+text.sentiment_assessments
+
+nltk.help.upenn_tagset('NN')
+#nltk.download('tagsets')
+
+####===============WORD SENSES============================########
+
+from nltk.corpus import wordnet as wn
+#nltk.download('wordnet')
+wn.synsets('human')
+
+wn.synsets('human')[0].definition()
+
+wn.synsets('human')[1].definition()
+
+human=wn.synsets('human',pos=wn.NOUN)[0]
+human
+
+
+human.hyponyms()
+
+human.hyponyms()[0]
+
+bike=wn.synsets('bike')
+bike[0]
+
+bike.wup_similarity(human)
+
+girl=wn.synsets('girl')
+girl
+
+synonyms = []
+for syn in wn.synsets('girl'):
+    for lemma in syn.lemmas(): #  A lemma is basically the dictionary form or base form of a word, as opposed to the various inflected forms of a word. 
+        synonyms.append(lemma.name())
+synonyms
+
+
+antonyms = []
+for syn in wn.synsets('male'):
+    for l in syn.lemmas():
+        if l.antonyms():
+            antonyms.append(l.antonyms()[0].name())
+antonyms
+
+
+########===========CHUNKING AND ENTITY RECOGNITION==========####
+
+from nltk.chunk import RegexpParser
+
+grammar = "NP: {<DT>?<JJ>*<NN>}"
+chunker = RegexpParser(grammar)
+result = chunker.parse(tags)
+result
+
+
+from nltk.chunk import ne_chunk
+nltk.download('maxent_ne_chunker')
+ne_chunk(tags)
+
+!pip install xrenner
+
+import sklearn
+import setuptools, tokenize
+
+!pip install sklearn
+
+from xrenner import Xrenner
+
+!pip install ICE
+
+from ICE import CollocationExtractor
+
+extractor = CollocationExtractor.with_collocation_pipeline("T1" , bing_key = "Temp",pos_check = False)
+
+
+
+
+
+
+
